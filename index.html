@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ti Baka 💖</title>
+
+<style>
+:root{
+  --rosa:#ff3366;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Georgia', serif;
+  background: #0d0d1a;
+  color: white;
+  padding: 1rem;
+}
+
+/* Fondo aurora */
+#fondo {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(120deg, #0d0d1a, #1a1a2e, #0d0d1a);
+  z-index: -2;
+}
+.aurora {
+  position: absolute;
+  width: 300%;
+  height: 200%;
+  top: -50%;
+  left: -100%;
+  background: radial-gradient(circle, rgba(255,100,180,.25), transparent 70%);
+  filter: blur(60px);
+  animation: auroraMove 18s infinite alternate;
+}
+@keyframes auroraMove {
+  to { transform: rotate(25deg) translate(120px,60px); }
+}
+
+/* Estrellas */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 3s infinite;
+}
+@keyframes twinkle { 50% {opacity:1;} }
+
+/* Modal */
+.card {
+  background: rgba(255,255,255,0.18);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 24px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 25px 60px rgba(0,0,0,.45);
+  text-align: center;
+}
+
+.card.vibrate {
+  animation: vibrar .25s infinite alternate;
+}
+@keyframes vibrar {
+  from {transform: translate(1px,-1px);}
+  to {transform: translate(-1px,1px);}
+}
+
+h1{
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+p{
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+button {
+  margin-top: 1rem;
+  padding: .9rem 1.8rem;
+  border: none;
+  border-radius: 30px;
+  background: var(--rosa);
+  color: white;
+  font-size: clamp(.95rem, 2.5vw, 1rem);
+  cursor: pointer;
+  width: 100%;
+  max-width: 260px;
+}
+
+#respuestas button{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Carta */
+#carta {
+  margin-top: 1.2rem;
+  text-align: left;
+  line-height: 1.6;
+  font-size: clamp(1rem, 2.8vw, 1.12rem);
+}
+
+#carta strong {
+  color: #fff6c9;
+}
+
+/* Pregunta y respuestas */
+#pregunta, #respuestas {
+  margin-top: 1.2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s ease;
+}
+
+.mostrar {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Corazones */
+.heart {
+  position: absolute;
+  animation: subir 6s linear forwards;
+}
+@keyframes subir {
+  from {transform: translateY(100vh); opacity:0;}
+  to {transform: translateY(-10vh); opacity:1;}
+}
+
+/* Animación final */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Ajustes móviles */
+@media (max-width:480px){
+  .aurora{
+    filter: blur(40px);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="fondo"><div class="aurora"></div></div>
+
+<audio id="musica" loop preload="auto">
+  <source src="https://www.dropbox.com/scl/fi/x0zybmvanqoi3kl1ozuf7/One-Piece-Ending-1-Memories-Sub-mp3cut.net.mp3?rlkey=lii70hxs5eq1pn6g1dho65icm&st=438qr7a7&raw=1" type="audio/mpeg">
+</audio>
+
+<div class="card" id="modal">
+  <h1>Para Ti Bakita 💕</h1>
+  <p>Hay algo que quiero decirte…</p>
+
+  <button onclick="iniciar()">Ábreme 💌</button>
+
+  <div id="carta"></div>
+
+  <div id="pregunta">¿Quieres ser mi San Valentín? 💖</div>
+  <div id="respuestas">
+    <button onclick="respuesta('Sí 💕')">Sí 💕</button>
+    <button onclick="respuesta('Obvio 😌')">Obvio 😌</button>
+  </div>
+</div>
+
+<script>
+const bloques = [
+  "<strong>Hace años compartimos risas, aventuras y sueños,</strong> y aunque la vida nos llevó por caminos distintos, <strong>el destino nos volvió a reunir.</strong>",
+  "Recordar nuestras charlas sobre animes en el carro, las teorías, las canciones locas y las risas compartidas, <strong>siempre me hace sonreír.</strong>",
+  "Me alegra que podamos retomar esta amistad y, aunque hoy solo seamos amigos, <strong>voy a luchar por ganarme la oportunidad de que algún día me veas de otra manera 💖😉</strong>",
+  "No sé qué nos depare el futuro, pero <strong>sí sé que quiero descubrirlo contigo, Bakita.</strong>",
+  "Con todo mi kokoro 💖"
+];
+
+let index = 0;
+let intervaloCorazones;
+const carta = document.getElementById("carta");
+
+/* Estrellas adaptativas */
+const estrellas = window.innerWidth < 600 ? 80 : 160;
+for(let i=0;i<estrellas;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.top=Math.random()*100+"%";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(Math.random()*3+2)+"s";
+  document.body.appendChild(s);
+}
+
+function iniciar(){
+  const audio = document.getElementById("musica");
+  audio.volume = 0.7;
+  audio.play().catch(()=>{});
+
+  document.getElementById("modal").classList.add("vibrate");
+  escribirBloque();
+  intervaloCorazones = setInterval(crearCorazon, 500);
+}
+
+function escribirBloque(){
+  if(index < bloques.length){
+    carta.innerHTML += bloques[index] + "<br><br>";
+    index++;
+    setTimeout(escribirBloque, 550);
+  } else {
+    document.getElementById("pregunta").classList.add("mostrar");
+    document.getElementById("respuestas").classList.add("mostrar");
+    document.getElementById("pregunta").scrollIntoView({behavior:"smooth"});
+  }
+}
+
+function crearCorazon(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(Math.random()*20+14)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+
+function respuesta(valor){
+  clearInterval(intervaloCorazones);
+  document.getElementById("modal").classList.remove("vibrate");
+
+  document.getElementById("respuestas").innerHTML = `
+    <p style="font-size:clamp(1.2rem,4vw,1.6rem); animation:fadeIn 1.2s;">
+      Me encanta que hayas dicho <strong>${valor}</strong> 💖✨<br>
+      Prometo hacerte sonreír siempre 🌹
+    </p>
+  `;
+}
+</script>
+
+</body>
+</html>
