@@ -3,327 +3,1302 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ti Bakita💖</title>
+
+<title>Para ti 🌻</title>
 
 <style>
-:root { --rosa:#ff3366; }
 
-* { box-sizing:border-box; }
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-  overflow-y: auto;
-  font-family: 'Georgia', serif;
-  background: #0d0d1a;
-  color: white;
-  padding: 1rem;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #050300;
+    color: white;
 }
 
-/* Fondo */
-#fondo {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(120deg,#0d0d1a,#1a1a2e,#0d0d1a);
-  z-index:-2;
-}
-.aurora {
-  position:absolute;
-  width:300%;
-  height:200%;
-  top:-50%;
-  left:-100%;
-  background:radial-gradient(circle,rgba(255,100,180,.25),transparent 70%);
-  filter:blur(60px);
-  animation:auroraMove 18s infinite alternate;
-}
-@keyframes auroraMove { to{transform:rotate(25deg) translate(120px,60px);} }
 
-/* Estrellas */
-.star{
-  position:absolute;
-  width:2px;height:2px;
-  background:white;border-radius:50%;
-  opacity:0;animation:twinkle 3s infinite;
-}
-@keyframes twinkle{50%{opacity:1;}}
+/* =====================================================
+   ESCENA PRINCIPAL
+===================================================== */
 
-/* Card */
-.card{
-  background:rgba(255,255,255,0.18);
-  padding:clamp(1.5rem,4vw,3rem);
-  border-radius:24px;
-  max-width:560px;width:100%;
-  max-height:90vh;overflow-y:auto;
-  backdrop-filter:blur(14px);
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  text-align:center;
+.scene {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #05080d 0%,
+            #111b20 45%,
+            #203d16 78%,
+            #071b05 100%
+        );
 }
 
-.card.vibrate{animation:vibrar .25s infinite alternate;}
-@keyframes vibrar{
-  from{transform:translate(1px,-1px);}
-  to{transform:translate(-1px,1px);}
+
+/* =====================================================
+   CIELO
+===================================================== */
+
+.sky {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255, 211, 70, .18),
+            transparent 25%
+        );
 }
 
-h1{font-size:clamp(1.5rem,4vw,2.2rem);}
-p{font-size:clamp(1rem,2.5vw,1.1rem);}
 
-button{
-  margin-top:1rem;
-  padding:.9rem 1.8rem;
-  border:none;border-radius:30px;
-  background:var(--rosa);color:white;
-  font-size:clamp(.95rem,2.5vw,1rem);
-  cursor:pointer;width:100%;max-width:260px;
+/* =====================================================
+   LUNA / SOL
+===================================================== */
+
+.sun {
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 15%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            #fff9b0 0%,
+            #ffe55c 35%,
+            #ffbd19 70%,
+            transparent 72%
+        );
+
+    filter:
+        drop-shadow(0 0 25px #ffd83d)
+        drop-shadow(0 0 70px rgba(255,200,40,.6));
+
+    opacity: .75;
+
+    transition: 3s;
 }
 
-#carta{text-align:left;margin-top:1.2rem;line-height:1.6;}
-#carta strong{color:#fff6c9;}
 
-#pregunta,#respuestas{
-  margin-top:1.2rem;
-  opacity:0;visibility:hidden;
-  transition:opacity 1s ease;
-}
-.mostrar{opacity:1!important;visibility:visible!important;}
+/* =====================================================
+   ESTRELLAS
+===================================================== */
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+.stars {
+    position: absolute;
+    inset: 0;
 }
 
-/* Corazones */
-.heart {
-  position: absolute;
-  animation: subir 6s linear forwards;
-  opacity: 0;
-}
-@keyframes subir {
-  0% { transform: translateY(0); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateY(-110vh); opacity: 0; }
+.star {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 8px white;
+
+    animation:
+        twinkle 2s infinite alternate;
 }
 
-/* Canvas */
-canvas{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999;
+@keyframes twinkle {
+
+    from {
+        opacity: .15;
+        transform: scale(.6);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.4);
+    }
+
 }
+
+
+/* =====================================================
+   CAMPO
+===================================================== */
+
+.ground {
+    position: absolute;
+
+    left: -10%;
+    bottom: -15%;
+
+    width: 120%;
+    height: 40%;
+
+    border-radius: 50% 50% 0 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #315d17,
+            #183b0b 55%,
+            #071d04
+        );
+
+    transform: scaleY(.6);
+
+    transition:
+        height 4s ease,
+        transform 4s ease;
+}
+
+
+/* =====================================================
+   GIRA SOLES
+===================================================== */
+
+.field {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 48%;
+
+    opacity: 0;
+
+    transition:
+        opacity 3s ease;
+}
+
+.field.show {
+    opacity: 1;
+}
+
+.sunflower {
+    position: absolute;
+
+    bottom: 8%;
+
+    transform-origin: bottom center;
+
+    animation:
+        flowerSway 4s ease-in-out infinite alternate;
+}
+
+.flower-stem {
+    width: 7px;
+
+    background:
+        linear-gradient(
+            to right,
+            #315f13,
+            #6c941f,
+            #24480d
+        );
+
+    border-radius: 10px;
+
+    margin: auto;
+
+    height: 130px;
+}
+
+.flower-head {
+    position: absolute;
+
+    top: -35px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        scale(.3);
+
+    width: 75px;
+    height: 75px;
+
+    opacity: 0;
+
+    transition:
+        transform 2s ease,
+        opacity 2s ease;
+}
+
+.field.show .flower-head {
+    transform:
+        translateX(-50%)
+        scale(1);
+
+    opacity: 1;
+}
+
+.flower-head::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            #8b4b00 0 19%,
+            transparent 20%
+        );
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 -25px 0 -5px #ffd52e,
+        0 25px 0 -5px #ffd52e,
+        -25px 0 0 -5px #ffd52e,
+        25px 0 0 -5px #ffd52e,
+        -18px -18px 0 -5px #ffdf3b,
+        18px -18px 0 -5px #ffdf3b,
+        -18px 18px 0 -5px #ffdf3b,
+        18px 18px 0 -5px #ffdf3b;
+}
+
+@keyframes flowerSway {
+
+    from {
+        transform: rotate(-2deg);
+    }
+
+    to {
+        transform: rotate(2deg);
+    }
+
+}
+
+
+/* =====================================================
+   SEMILLA
+===================================================== */
+
+.seed-stage {
+    position: absolute;
+
+    left: 50%;
+    bottom: 13%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 20;
+
+    text-align: center;
+
+    transition:
+        opacity 2s ease,
+        transform 2s ease;
+}
+
+.seed-stage.hide {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        translateY(50px)
+        scale(.8);
+
+    pointer-events: none;
+}
+
+.seed {
+    font-size: 55px;
+
+    filter:
+        drop-shadow(0 0 10px rgba(255,200,40,.5));
+
+    animation:
+        seedPulse 1.8s infinite;
+}
+
+@keyframes seedPulse {
+
+    50% {
+        transform: scale(1.1);
+    }
+
+}
+
+
+/* =====================================================
+   MENSAJE DE ESCENA
+===================================================== */
+
+.scene-text {
+    position: absolute;
+
+    top: 60%;
+
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 90%;
+
+    text-align: center;
+
+    z-index: 30;
+
+    pointer-events: none;
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+}
+
+.scene-text.hide {
+    opacity: 0;
+
+    transform:
+        translate(-50%, -45%);
+}
+
+.scene-text h1 {
+    font-size:
+        clamp(35px, 8vw, 75px);
+
+    color: #ffe35a;
+
+    text-shadow:
+        0 0 15px #ffbd00,
+        0 0 40px rgba(255,190,0,.5);
+}
+
+.scene-text p {
+    margin-top: 15px;
+
+    font-size:
+        clamp(16px, 3vw, 23px);
+
+    color: #fff3b5;
+}
+
+
+/* =====================================================
+   CARTA
+===================================================== */
+
+.letter {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.5);
+
+    backdrop-filter:
+        blur(7px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 2s ease,
+        visibility 2s ease;
+}
+
+.letter.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.letter-card {
+    width: min(700px, 95%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,248,200,.97),
+            rgba(255,231,145,.96)
+        );
+
+    color: #4a2b00;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.7),
+        0 0 60px rgba(255,210,40,.2);
+
+    transform:
+        translateY(40px)
+        scale(.85);
+
+    transition:
+        transform 1.5s cubic-bezier(.2,.8,.2,1);
+}
+
+.letter.show .letter-card {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.photo {
+    width: 130px;
+    height: 130px;
+
+    margin-bottom: 20px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        5px solid #fff4a0;
+
+    box-shadow:
+        0 5px 25px rgba(100,60,0,.25);
+}
+
+.letter-card h2 {
+    font-size:
+        clamp(35px, 7vw, 60px);
+
+    color: #a96100;
+
+    margin-bottom: 20px;
+}
+
+.letter-card p {
+    font-size:
+        clamp(17px, 3vw, 21px);
+
+    line-height: 1.7;
+}
+
+.signature {
+    margin-top: 25px;
+
+    font-style: italic;
+
+    color: #a96100;
+}
+
+.close-button {
+    margin-top: 25px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    padding: 12px 25px;
+
+    background: #d99900;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   BOTÓN MÚSICA
+===================================================== */
+
+.music {
+    position: fixed;
+
+    z-index: 200;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 55px;
+    height: 55px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe14b,
+            #ffae00
+        );
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    display: none;
+
+    box-shadow:
+        0 5px 25px rgba(255,190,0,.5);
+}
+
+.music.playing {
+    animation:
+        musicPulse 1.5s infinite;
+}
+
+@keyframes musicPulse {
+
+    70% {
+        box-shadow:
+            0 0 0 18px
+            rgba(255,210,50,0);
+    }
+
+}
+
+
+/* =====================================================
+   PÉTALOS
+===================================================== */
+
+.petal {
+    position: fixed;
+
+    top: -40px;
+
+    z-index: 80;
+
+    pointer-events: none;
+
+    animation:
+        fall linear forwards;
+}
+
+@keyframes fall {
+
+    to {
+        transform:
+            translateY(110vh)
+            translateX(var(--x))
+            rotate(720deg);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* =====================================================
+   BOTÓN INICIAL
+===================================================== */
+
+.start {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 300;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #493000,
+            #090501 70%
+        );
+
+    transition:
+        opacity 2s ease,
+        visibility 2s ease;
+}
+
+.start.hide {
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+.start-flower {
+    font-size: 90px;
+
+    animation:
+        startFlower 2s infinite;
+}
+
+@keyframes startFlower {
+
+    50% {
+        transform:
+            scale(1.12)
+            rotate(5deg);
+    }
+
+}
+
+.start h1 {
+    margin-top: 20px;
+
+    font-size:
+        clamp(35px, 8vw, 65px);
+
+    color: #ffdf45;
+}
+
+.start p {
+    margin-top: 10px;
+
+    color: #fff0ae;
+
+    font-size: 18px;
+}
+
+.start button {
+    margin-top: 30px;
+
+    padding: 15px 30px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe65b,
+            #ffae00
+        );
+
+    color: #4c2b00;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(255,190,0,.35);
+
+    transition: .3s;
+}
+
+.start button:hover {
+    transform: scale(1.08);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:600px) {
+
+    .sun {
+        width: 90px;
+        height: 90px;
+    }
+
+    .flower-stem {
+        height: 90px;
+    }
+
+    .letter-card {
+        padding: 30px 20px;
+    }
+
+    .photo {
+        width: 105px;
+        height: 105px;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<div id="fondo"><div class="aurora"></div></div>
-<audio id="musica" loop>
-  <source src="https://www.dropbox.com/scl/fi/x0zybmvanqoi3kl1ozuf7/One-Piece-Ending-1-Memories-Sub-mp3cut.net.mp3?rlkey=lii70hxs5eq1pn6g1dho65icm&st=438qr7a7&raw=1" type="audio/mpeg">
-</audio>
 
-<canvas id="confetti"></canvas>
-<canvas id="fireworks"></canvas>
+<!-- =====================================================
+     ESCENA
+===================================================== -->
 
-<div class="card" id="modal">
-  <h1>Para Ti Bakita 💕</h1>
-  <p>Hay algo que quiero decirte…</p>
+<div class="scene">
 
-  <button onclick="iniciar()">Ábreme 💌</button>
+    <div class="sky"></div>
 
-  <div id="carta"></div>
+    <div class="stars" id="stars"></div>
 
-  <div id="pregunta">¿Quieres ser mi San Valentín? 💖</div>
-  <div id="respuestas">
-    <button onclick="respuesta('Sí 💕')">Sí 💕</button>
-    <button onclick="respuesta('Obvio 😌')">Obvio 😌</button>
-  </div>
+    <div class="sun"></div>
+
+    <div class="ground"></div>
+
+    <div class="field" id="field"></div>
+
+
+    <!-- TEXTO DE LA ANIMACIÓN -->
+
+    <div
+        class="scene-text"
+        id="sceneText">
+
+        <h1 id="sceneTitle">
+            Una pequeña semilla...
+        </h1>
+
+        <p id="sceneSubtitle">
+            puede convertirse en algo hermoso 🌱
+        </p>
+
+    </div>
+
+
+    <!-- SEMILLA -->
+
+    <div
+        class="seed-stage"
+        id="seedStage">
+
+        <div class="seed">
+            🌱
+        </div>
+
+    </div>
+
 </div>
 
-<script>
-/* CARTA */
-const bloques=[
-  `<strong>Hace años compartimos risas, aventuras y sueños,</strong>
-  y aunque la vida nos llevó por caminos distintos,
-  <strong>el destino nos volvió a reunir.</strong>`,
 
-  `Recordar nuestros charlas sobre animes en el carro,
-  las teorías, las canciones locas, y las risas compartidas,
-  <strong>siempre me hace sonreír.</strong>`,
+<!-- =====================================================
+     PANTALLA INICIAL
+===================================================== -->
 
-  `Me alegra que podamos retomar esta amistad,
-  y aunque hoy solo seamos amigos,
-  <strong>te advierto… voy a luchar por ganarme
-  la oportunidad de que algún día me veas de otra manera 💖😉</strong>`,
+<section
+    class="start"
+    id="start">
 
-  `No sé qué nos depare el futuro,
-  <strong>pero sí sé que quiero descubrirlo contigo, Bakita.</strong>`,
+    <div class="start-flower">
+        🌻
+    </div>
 
-  `Con todo mi kokoro 💖`
-];
-let index = 0;
-const carta = document.getElementById("carta");
+    <h1>
+        Tengo algo para ti...
+    </h1>
 
-/* Estrellas */
-const estrellas = window.innerWidth < 600 ? 80 : 160;
-for(let i=0;i<estrellas;i++){
-  const s=document.createElement("div");
-  s.className="star";
-  s.style.top=Math.random()*100+"%";
-  s.style.left=Math.random()*100+"%";
-  s.style.animationDuration=(Math.random()*3+2)+"s";
-  document.body.appendChild(s);
-}
-
-/* CORAZONES */
-let intervaloCorazones;
-function crearCorazon(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML=["❤️","💖","💕","💘"][Math.floor(Math.random()*4)];
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(Math.random()*22+16)+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(), 6000);
-}
-
-function iniciarCorazones(){
-  intervaloCorazones = setInterval(crearCorazon, 700);
-}
-
-/* VIBRACIÓN */
-function vibrar(){
-  if(navigator.vibrate) navigator.vibrate(200);
-}
-
-/* CONFETI */
-const confettiCanvas = document.getElementById("confetti");
-const cctx = confettiCanvas.getContext("2d");
-confettiCanvas.width = innerWidth;
-confettiCanvas.height = innerHeight;
-let confettis = [];
-let confettiActivo = false;
-const maxConfetti = window.innerWidth < 600 ? 80 : 150;
-
-function resizeConfetti(){
-  confettiCanvas.width = innerWidth;
-  confettiCanvas.height = innerHeight;
-}
-window.addEventListener("resize", resizeConfetti);
-
-function crearConfetti(){
-  if(!confettiActivo) return;
-  confettis.push({
-    x: Math.random() * confettiCanvas.width,
-    y: -10,
-    r: Math.random() * 4 + 3,
-    d: Math.random() * 1 + 1,
-    c: ["#ff3366","#fff","#ffcc00","#ff99cc"][Math.floor(Math.random()*4)]
-  });
-}
-
-function animarConfetti(){
-  cctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-  if(confettiActivo && confettis.length < maxConfetti) crearConfetti();
-
-  confettis.forEach((p, i) => {
-    cctx.fillStyle = p.c;
-    cctx.beginPath();
-    cctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    cctx.fill();
-    p.y += p.d;
-    if(p.y > confettiCanvas.height) confettis.splice(i,1);
-  });
-
-  requestAnimationFrame(animarConfetti);
-}
-animarConfetti();
-
-/* FUEGOS ARTIFICIALES */
-const fwCanvas = document.getElementById("fireworks");
-const fctx = fwCanvas.getContext("2d");
-fwCanvas.width = innerWidth;
-fwCanvas.height = innerHeight;
-let sparks = [];
-let fuegosActivos = false;
-
-function resizeFireworks(){
-  fwCanvas.width = innerWidth;
-  fwCanvas.height = innerHeight;
-}
-window.addEventListener("resize", resizeFireworks);
-
-function crearFuego(){
-  if(!fuegosActivos) return;
-  const x = Math.random() * fwCanvas.width;
-  const y = Math.random() * fwCanvas.height / 2;
-  for(let i=0; i<25; i++){
-    sparks.push({
-      x, y,
-      vx: (Math.random()-0.5)*4,
-      vy: (Math.random()-0.5)*4,
-      life: 50
-    });
-  }
-}
-
-setInterval(crearFuego, 1200);
-
-function animarFuegos(){
-  fctx.clearRect(0,0,fwCanvas.width, fwCanvas.height);
-  sparks.forEach((s, i) => {
-    fctx.fillStyle = "rgba(255,200,200,.8)";
-    fctx.fillRect(s.x, s.y, 2, 2);
-    s.x += s.vx;
-    s.y += s.vy;
-    s.life--;
-    if(s.life <= 0) sparks.splice(i,1);
-  });
-  requestAnimationFrame(animarFuegos);
-}
-animarFuegos();
-
-/* ESCRIBIR CARTA */
-function iniciar(){
-    const audio=document.getElementById("musica");
-    audio.volume=0.8;
-    audio.play().catch(()=>{});
-  document.getElementById("modal").classList.add("vibrate");
-  escribir();
-  iniciarCorazones();
-}
-
-function escribir(){
-  if(index < bloques.length){
-    carta.innerHTML += bloques[index] + "<br><br>";
-    index++;
-    setTimeout(escribir, 600);
-  } else {
-    pregunta.classList.add("mostrar");
-    respuestas.classList.add("mostrar");
-  }
-}
-
-/* RESPUESTA */
-function respuesta(valor){
-  vibrar();
-  clearInterval(intervaloCorazones);
-
-  // ACTIVA CONFETI + FUEGOS SOLO AL ACEPTAR
-  confettiActivo = true;
-  fuegosActivos = true;
-
-  respuestas.innerHTML = `
-    <p style="font-size:1.4rem;animation:fadeIn 1s;">
-      Me encanta que hayas dicho <strong>${valor}</strong> 💖✨<br>
-      Gracias Baka
+    <p>
+        Pero tienes que descubrirlo 🌱
     </p>
-  `;
+
+    <button id="startButton">
+        Comenzar sorpresa 💛
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     CARTA FINAL
+===================================================== -->
+
+<section
+    class="letter"
+    id="letter">
+
+    <div class="letter-card">
+
+        <img
+            class="photo"
+            src="foto.jpg"
+            alt="Una foto especial">
+
+        <h2>
+            Para ti 🌻
+        </h2>
+
+        <p>
+
+            Así como una pequeña semilla puede crecer
+            hasta convertirse en un hermoso campo de
+            flores...
+
+            <br><br>
+
+            espero que nunca olvides que las cosas
+            bonitas también empiezan con pequeños
+            detalles.
+
+            <br><br>
+
+            Estas flores son para recordarte que
+            mereces días llenos de luz, sonrisas
+            y momentos bonitos.
+
+            <br><br>
+
+            Y si pudiera regalarte un campo entero
+            de flores amarillas, lo haría.
+
+        </p>
+
+        <p class="signature">
+            Con mucho cariño 💛
+            <br>
+            Para ti.
+        </p>
+
+        <button
+            class="close-button"
+            id="closeButton">
+
+            Volver a ver las flores 🌻
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MÚSICA
+===================================================== -->
+
+<button
+    class="music"
+    id="musicButton">
+
+    🎵
+
+</button>
+
+<audio
+    id="audio"
+    loop>
+
+    <source
+        src="musica.mp3"
+        type="audio/mpeg">
+
+</audio>
+
+
+<script>
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const start =
+    document.getElementById("start");
+
+const startButton =
+    document.getElementById("startButton");
+
+const sceneText =
+    document.getElementById("sceneText");
+
+const sceneTitle =
+    document.getElementById("sceneTitle");
+
+const sceneSubtitle =
+    document.getElementById("sceneSubtitle");
+
+const seedStage =
+    document.getElementById("seedStage");
+
+const field =
+    document.getElementById("field");
+
+const letter =
+    document.getElementById("letter");
+
+const closeButton =
+    document.getElementById("closeButton");
+
+const audio =
+    document.getElementById("audio");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+const stars =
+    document.getElementById("stars");
+
+
+/* =====================================================
+   ESTRELLAS
+===================================================== */
+
+for (let i = 0; i < 100; i++) {
+
+    const star =
+        document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 60 + "%";
+
+    star.style.animationDelay =
+        Math.random() * 3 + "s";
+
+    stars.appendChild(star);
 }
+
+
+/* =====================================================
+   CREAR CAMPO DE GIRASOLES
+===================================================== */
+
+function createField() {
+
+    field.innerHTML = "";
+
+    const amount =
+        window.innerWidth < 600
+        ? 18
+        : 35;
+
+    for (let i = 0; i < amount; i++) {
+
+        const sunflower =
+            document.createElement("div");
+
+        sunflower.className =
+            "sunflower";
+
+        sunflower.style.left =
+            Math.random() * 100 + "%";
+
+        sunflower.style.bottom =
+            (Math.random() * 18) + "%";
+
+        sunflower.style.transform =
+            `scale(${.5 + Math.random() * .9})`;
+
+        sunflower.style.animationDelay =
+            Math.random() * 3 + "s";
+
+        const stem =
+            document.createElement("div");
+
+        stem.className =
+            "flower-stem";
+
+        const head =
+            document.createElement("div");
+
+        head.className =
+            "flower-head";
+
+        sunflower.appendChild(head);
+        sunflower.appendChild(stem);
+
+        field.appendChild(sunflower);
+    }
+}
+
+
+/* =====================================================
+   PÉTALOS
+===================================================== */
+
+function createPetal() {
+
+    const petal =
+        document.createElement("div");
+
+    petal.className =
+        "petal";
+
+    petal.textContent =
+        Math.random() > .4
+        ? "🌻"
+        : "✨";
+
+    petal.style.left =
+        Math.random() * 100 + "vw";
+
+    petal.style.fontSize =
+        (15 + Math.random() * 25) + "px";
+
+    petal.style.setProperty(
+        "--x",
+        (Math.random() * 300 - 150) + "px"
+    );
+
+    petal.style.animationDuration =
+        (4 + Math.random() * 6) + "s";
+
+    document.body.appendChild(petal);
+
+    setTimeout(
+        () => petal.remove(),
+        11000
+    );
+}
+
+
+/* =====================================================
+   LLUVIA DE PÉTALOS
+===================================================== */
+
+let petalInterval;
+
+function startPetals() {
+
+    petalInterval =
+        setInterval(
+            createPetal,
+            250
+        );
+}
+
+
+/* =====================================================
+   INICIAR EXPERIENCIA
+===================================================== */
+
+startButton.addEventListener(
+    "click",
+    async () => {
+
+        start.classList.add("hide");
+
+        musicButton.style.display =
+            "block";
+
+        try {
+
+            await audio.play();
+
+            musicButton.textContent =
+                "🔊";
+
+            musicButton.classList.add(
+                "playing"
+            );
+
+        } catch (error) {
+
+            console.log(
+                "La música requiere interacción."
+            );
+
+        }
+
+        startPetals();
+
+        createField();
+
+        runAnimation();
+
+    }
+);
+
+
+/* =====================================================
+   ANIMACIÓN PRINCIPAL
+===================================================== */
+
+function runAnimation() {
+
+    /*
+     * 1. Semilla
+     */
+
+    sceneTitle.textContent =
+        "Una pequeña semilla...";
+
+    sceneSubtitle.textContent =
+        "puede convertirse en algo hermoso 🌱";
+
+
+    /*
+     * 2. Después de unos segundos,
+     * la semilla desaparece.
+     */
+
+    setTimeout(() => {
+
+        seedStage.classList.add("hide");
+
+        sceneTitle.textContent =
+            "Solo necesita un poco de tiempo...";
+
+        sceneSubtitle.textContent =
+            "un poco de luz... y mucho cariño ✨";
+
+    }, 3500);
+
+
+    /*
+     * 3. Aparecen los primeros girasoles.
+     */
+
+    setTimeout(() => {
+
+        field.classList.add("show");
+
+        sceneTitle.textContent =
+            "Y entonces sucede la magia...";
+
+        sceneSubtitle.textContent =
+            "🌻🌻🌻";
+
+    }, 6500);
+
+
+    /*
+     * 4. Campo completo.
+     */
+
+    setTimeout(() => {
+
+        sceneTitle.textContent =
+            "Un campo entero para ti";
+
+        sceneSubtitle.textContent =
+            "porque te mereces todas las flores del mundo 💛";
+
+    }, 9000);
+
+
+    /*
+     * 5. Mostrar carta.
+     */
+
+    setTimeout(() => {
+
+        sceneText.classList.add("hide");
+
+        setTimeout(() => {
+
+            letter.classList.add("show");
+
+        }, 1200);
+
+    }, 12000);
+
+}
+
+
+/* =====================================================
+   MÚSICA
+===================================================== */
+
+let playing = true;
+
+musicButton.addEventListener(
+    "click",
+    async () => {
+
+        if (playing) {
+
+            audio.pause();
+
+            musicButton.textContent =
+                "🎵";
+
+            musicButton.classList.remove(
+                "playing"
+            );
+
+            playing = false;
+
+        } else {
+
+            await audio.play();
+
+            musicButton.textContent =
+                "🔊";
+
+            musicButton.classList.add(
+                "playing"
+            );
+
+            playing = true;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   VOLVER A VER LAS FLORES
+===================================================== */
+
+closeButton.addEventListener(
+    "click",
+    () => {
+
+        letter.classList.remove("show");
+
+        sceneText.classList.remove("hide");
+
+        seedStage.classList.remove("hide");
+
+        field.classList.remove("show");
+
+        setTimeout(
+            runAnimation,
+            1000
+        );
+
+    }
+);
+
 </script>
 
 </body>
